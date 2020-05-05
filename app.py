@@ -6,13 +6,13 @@ from flask import Flask, render_template, request, session, jsonify, redirect
 from models import Shop
 from dbapis import *
 
-application = Flask(__name__)
+app = Flask(__name__)
 
-application.config['SECRET_KEY'] = os.urandom(24)
-application.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
+app.config['SECRET_KEY'] = os.urandom(24)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 
 
-@application.route('/booklist')
+@app.route('/booklist')
 def page_shoplist():
     if 'loginuser' not in session: return redirect('/login')
     books = get_all_shop()
@@ -22,13 +22,13 @@ def page_shoplist():
         pageAll = int(len(books) / 10)
     return render_template('booklist.html', books = books[0:10],prePage=0,nowPage=1,nextPage=2,pageAll=pageAll)
 
-@application.route('/bookdetail/<bookid>')
+@app.route('/bookdetail/<bookid>')
 def page_bookdetail(bookid):
 
     return jsonify(result=True)
 
 
-@application.route('/login', methods=['post'])
+@app.route('/login', methods=['post'])
 def page_login_post():
     username = request.form['username']
     password = request.form['password']
@@ -45,7 +45,7 @@ def page_login_post():
         page = 'login'
         return render_template('loginfail.html', notice=notice, url=url, page=page)
 
-@application.route('/regist', methods=['post'])
+@app.route('/regist', methods=['post'])
 def api_regist():
     username = request.form['username']
     password = request.form['password']
@@ -61,7 +61,7 @@ def api_regist():
         page = 'regist'
         return render_template('loginfail.html',notice=notice, url=url, page=page)
 
-@application.route('/quite')
+@app.route('/quite')
 def user_quite():
 
     if session['username']:
@@ -79,7 +79,7 @@ def user_quite():
 
 
 
-@application.route('/addcar/<shopid>/<price>', methods=['get'])
+@app.route('/addcar/<shopid>/<price>', methods=['get'])
 def car_add(shopid,price):
     if session['shopcart']:
         arr=[];
@@ -87,24 +87,24 @@ def car_add(shopid,price):
 
         arr=session['shopcart']
         session['toprice'] = float(session['toprice']) +float(price)
-        temp.applicationend(shopid)
-        temp.applicationend(price)
-        arr.applicationend(temp)
+        temp.append(shopid)
+        temp.append(price)
+        arr.append(temp)
         session['shopcart']=arr;
     else:
         arr=[];
         temp = [];
 
-        temp.applicationend(shopid)
-        temp.applicationend(price)
-        arr.applicationend(temp)
+        temp.append(shopid)
+        temp.append(price)
+        arr.append(temp)
         session['toprice']=float(price)
         session['shopcart']=arr;
 
 
     return redirect('http://127.0.0.1:5000/showshopindex')
 
-@application.route('/shop_search', methods=['post'])
+@app.route('/shop_search', methods=['post'])
 def shop_search():
     keyword = request.form['keyword']
     results=get_result_search(keyword);
@@ -114,7 +114,7 @@ def shop_search():
 
 
 
-@application.route('/dealcomm', methods=['post'])
+@app.route('/dealcomm', methods=['post'])
 def comm_deal():
     shopid = request.form['shopid']
     message = request.form['message']
@@ -128,26 +128,26 @@ def comm_deal():
         return redirect('http://127.0.0.1:5000/shopdetail/'+shopid)
 
 
-@application.route('/showlistuser')
+@app.route('/showlistuser')
 def show_user():
 
     users=get_user_db()
     return render_template('listuser.html',u=users)
-@application.route('/')
-@application.route('/showlogin')
+@app.route('/')
+@app.route('/showlogin')
 def page_login():
 
     return render_template('login.html')
 
-@application.route('/showregist')
+@app.route('/showregist')
 def page_regist():
     return render_template('regist.html')
 
-@application.route('/savecomm')
+@app.route('/savecomm')
 def comm_save():
     return render_template('regist.html')
 
-@application.route('/showcar')
+@app.route('/showcar')
 def car_show():
     if session['shopcart']:
         cart = session['shopcart']
@@ -156,12 +156,12 @@ def car_show():
 
     return render_template('shopcart.html',cart=cart,prices=session['toprice'])
 
-@application.route('/settle')
+@app.route('/settle')
 def settle():
 
     return render_template('settle.html',prices=session['toprice'])
 
-@application.route('/cardelete/<shopid>', methods=['GET'])
+@app.route('/cardelete/<shopid>', methods=['GET'])
 def car_delete(shopid):
     cart=session['shopcart']
     for i in cart:
@@ -173,7 +173,7 @@ def car_delete(shopid):
     return render_template('shopcart.html',cart=cart,prices=session['toprice'])
 
 
-@application.route('/showshopindex')
+@app.route('/showshopindex')
 def showshopindex():
     allshop=get_all_shop();
 
@@ -181,7 +181,7 @@ def showshopindex():
 
 
 
-@application.route('/shopdetail/<inshopid>', methods=['GET'])
+@app.route('/shopdetail/<inshopid>', methods=['GET'])
 def shopdetail(inshopid):
     Shop=get_Shop_by_id(inshopid);
     Mess=get_all_mess(inshopid);
@@ -191,4 +191,4 @@ def shopdetail(inshopid):
 
 
 if __name__ == '__main__':
-    application.run()
+    app.run()
