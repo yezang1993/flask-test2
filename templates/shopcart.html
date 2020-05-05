@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>myshoppage</title>
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+ <div class="jumbotron text-center" style="margin-bottom:0">
+   <h1>My Shop(MS)</h1>
+<img src="/static/imgs/logo.png" width="100px" height="50px">
+</div>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://127.0.0.1:5000/showshopindex">MyShop</a>
+         <img src="/static/imgs/logo.png" width="100px" height="50px">
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="http://127.0.0.1:5000/showshopindex">index</a></li>
+        <li><a href="http://127.0.0.1:5000/showcar">Shopping Cart</a></li>
+          <li><a href="http://127.0.0.1:5000/quite">Quite your account</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row">
+
+      <table class="table">
+
+  <thead>
+    <tr>
+      <th>commodityid</th>
+      <th>commodityprice</th>
+        <th>operator</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in cart %}
+    <tr>
+      <td>{{ item[0] }}</td>
+      <td>{{ item[1] }}</td>
+    <td><a href="http://127.0.0.1:5000/cardelete/{{ item[0] }}">delete item</a></td>
+    </tr>
+
+{% endfor %}
+ <tr>
+      <td>totally price</td>
+      <td> {{ prices }} </td>
+     <td> </td>
+    </tr>
+  <tr>
+      <td><a href="http://127.0.0.1:5000/settle"> Settlement</a></td>
+      <td></td><td></td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+</div>
+
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>myshoppage</title>
+	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+ <div class="jumbotron text-center" style="margin-bottom:0">
+  <h1>My Shop(MS)</h1>
+<img src="static/imgs/logo.png" width="100px" height="50px">
+
+</div>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="http://127.0.0.1:5000/showshopindex">MyShop</a>
+
+         <img src="static/imgs/logo.png" width="100px" height="50px">
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="http://127.0.0.1:5000/showshopindex">Index</a></li>
+
+        <li><a href="http://127.0.0.1:5000/showcar">Shopping Cart</a></li>
+          <li><a href="http://127.0.0.1:5000/quite">Quite your account</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="row">
+
+    <div class="col-sm-8">
+
+
+        <table class="table table-hover">
+
+  <thead>
+    <tr>
+      <th>Shop_Name</th>
+      <th>Shop_Graphy</th>
+      <th>Shop_Price</th>
+    </tr>
+  </thead>
+  <tbody>
+
+
+    {% for i in u %}
+            <tr>
+                <td><a href="http://127.0.0.1:5000/shopdetail/{{ i[0] }}"> {{ i[1] }}</a></td>
+                <td><img src="static/imgs/{{ i[3] }}" width="60px" height="50px"></td>
+
+                <td>{{ i[2] }}</td>
+
+
+            </tr>
+    {% endfor %}
+
+
+
+
+  </tbody>
+</table>
+    <form role="form" enctype="multipart/form-data" method="post" action="http://127.0.0.1:5000/shop_search">
+  <div class="form-group">
+    <label for="name">search for...</label>
+    <input type="text" name="keyword" class="form-control" placeholder="input keyword">
+  </div>
+        <button type="submit" class="btn btn-default">search!</button>
+ </form>
+    </div>
+  </div>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+.container{width:650px;max-width:650px;marign:0 auto;}
+.pager{text-align:center;}
+.pager a,
+.pager span{padding:0 10px 0 10px;}
+
+.book {
+    position: relative;
+    height: 130px;
+    margin:20px 0 20px 0;
+}
+
+.book .imgwrapper {
+    position: absolute;
+    max-width: 130px;
+    height: 130px;
+}
+
+.book .imgwrapper img {
+    width:90px;
+    height: 130px;
+}
+
+.book .contentwrapper {
+    position: absolute;
+    left: 100px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.book .contentwrapper .title {
+    margin-top: 5px;
+    font-size:18px;
+}
+
+.book .contentwrapper .desc {
+    width: 100%;
+    font-size:16px;
+    text-overflow: -o-ellipsis-lastline;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
